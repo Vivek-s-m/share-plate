@@ -23,10 +23,8 @@ app.use(cors({
 app.use(bodyParser.urlencoded({ extended: true }));
 app.use(bodyParser.json());
 
-// Serve static files (HTML, CSS)
 app.use(express.static('public'));
 
-// Handle form submission
 app.post('/submit-donation', async (req, res) => {
     try {
         const formData = req.body;
@@ -88,6 +86,27 @@ app.post('/submit-volunteer', async (req, res) => {
         res.status(500).json({ message: 'Server error. Please try again later.' });
     }
 });
+
+app.get('/donations', async (req, res) => {
+    try {
+        const { page = 1, limit = 10 } = req.query; 
+        const donations = await Donation.find()
+            .sort({ createdAt: -1 })
+            .skip((page - 1) * limit)
+            .limit(Number(limit)); 
+
+        const totalDonations = await Donation.countDocuments();
+        res.status(200).json({
+            donations,
+            totalPages: Math.ceil(totalDonations / limit),
+            currentPage: Number(page),
+        });
+    } catch (error) {
+        console.error('Error fetching donations:', error);
+        res.status(500).json({ message: 'Failed to retrieve donations.' });
+    }
+});
+
 
 // Start the server
 app.listen(PORT, () => {

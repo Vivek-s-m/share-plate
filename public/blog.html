@@ -1,0 +1,206 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blog Post - SharePlate</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script src="https://unpkg.com/@lucide/web/dist/umd/lucide.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body class="bg-gray-50">
+    <!-- Navbar -->
+    <nav class="bg-white shadow-lg">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <a href="/" class="flex items-center">
+                        <i data-lucide="heart" class="h-8 w-8 text-rose-500"></i>
+                        <span class="ml-2 text-xl font-bold text-gray-800">SharePlate</span>
+                    </a>
+                </div>
+
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-600 hover:text-rose-500">Home</a>
+                    <a href="donate.html" class="text-gray-600 hover:text-rose-500">Donate Food</a>
+                    <a href="volunteer.html" class="text-gray-600 hover:text-rose-500">Volunteer</a>
+                    <a href="viewDonations.html" class="text-gray-600 hover:text-rose-500">View donations</a>
+                    <a href="impact.html" class="text-gray-500">Impact</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Blog Header Section -->
+    <div class="bg-rose-500 text-white text-center py-16">
+        <h1 class="text-4xl font-bold">How Food Donations are Transforming Communities</h1>
+        <p class="mt-4 text-xl">Inspiring stories of giving, volunteerism, and impact through food donations.</p>
+    </div>
+
+    <!-- Blog Post Content -->
+    <div class="max-w-3xl mx-auto py-12 px-4 sm:px-6 lg:px-8">
+        <article>
+            <!-- Blog Post Title -->
+            <h2 class="text-3xl font-bold text-gray-900 mb-4">Local Weddings Creating Big Impacts with Food Donations</h2>
+
+            <!-- Blog Post Image -->
+            <img src="https://www.thecelebrantdirectory.com/assets/2019/07/Untitled-design-5.jpg" alt="Wedding celebration" class="w-full h-96 object-cover rounded-lg mb-8">
+
+            <!-- Blog Post Content -->
+            <div class="prose lg:prose-xl text-gray-800">
+                <p>
+                    A recent local wedding sparked a wave of generosity, where the newlyweds decided to donate their wedding
+                    food to the community center. Over 200 meals were shared with individuals and families in need. This act of
+                    kindness not only made the day special for the couple but also brought together a whole community in an
+                    unexpected way.
+                </p>
+
+                <p>
+                    By donating leftover food from special events, we can make a significant impact on local communities.
+                    SharePlate works with individuals, businesses, and organizations to help connect people who want to donate
+                    food with those who need it. This simple yet effective solution is changing the way we think about food waste
+                    and social responsibility.
+                </p>
+            </div>
+        </article>
+
+        <!-- Comment Section -->
+        <section class="mt-12">
+            <h3 class="text-2xl font-semibold text-gray-900 mb-4">Comments (3)</h3>
+
+            <div class="space-y-6">
+                <!-- Comment 1 -->
+                <div class="bg-gray-50 p-4 rounded-lg shadow-md">
+                    <div class="flex items-center space-x-4">
+                        <img src="https://randomuser.me/api/portraits/men/1.jpg" alt="User" class="w-12 h-12 rounded-full">
+                        <div>
+                            <p class="text-gray-800 font-semibold">John Doe</p>
+                            <p class="text-gray-600 text-sm">2 hours ago</p>
+                        </div>
+                    </div>
+                    <p class="mt-4 text-gray-700">
+                        This is such a great initiative! It’s wonderful to see how weddings and events can contribute to
+                        positive social impact. Kudos to SharePlate for making this happen.
+                    </p>
+                </div>
+
+                <!-- Comment 2 -->
+                <div class="bg-gray-50 p-4 rounded-lg shadow-md">
+                    <div class="flex items-center space-x-4">
+                        <img src="https://randomuser.me/api/portraits/women/2.jpg" alt="User" class="w-12 h-12 rounded-full">
+                        <div>
+                            <p class="text-gray-800 font-semibold">Jane Smith</p>
+                            <p class="text-gray-600 text-sm">1 day ago</p>
+                        </div>
+                    </div>
+                    <p class="mt-4 text-gray-700">
+                        What an inspiring story! It’s great to see communities coming together to share resources and help
+                        those in need. I hope more people will adopt this idea.
+                    </p>
+                </div>
+
+                <!-- Comment 3 -->
+                <div class="bg-gray-50 p-4 rounded-lg shadow-md">
+                    <div class="flex items-center space-x-4">
+                        <img src="https://randomuser.me/api/portraits/men/3.jpg" alt="User" class="w-12 h-12 rounded-full">
+                        <div>
+                            <p class="text-gray-800 font-semibold">Michael Green</p>
+                            <p class="text-gray-600 text-sm">3 days ago</p>
+                        </div>
+                    </div>
+                    <p class="mt-4 text-gray-700">
+                        This is such a heartwarming story. I’m really moved by how one couple’s wedding turned into such a
+                        meaningful community event. I’ll definitely look into supporting SharePlate!
+                    </p>
+                </div>
+            </div>
+
+            <!-- Comment Form -->
+            <div class="mt-12">
+                <h4 class="text-xl font-semibold text-gray-900 mb-4">Leave a Comment</h4>
+
+                <form id="commentForm" action="#" method="POST">
+                    <div class="space-y-4">
+                        <div>
+                            <label for="name" class="block text-gray-700 font-medium">Your Name</label>
+                            <input type="text" id="name" name="name" class="w-full p-3 border border-gray-300 rounded-md" placeholder="Enter your name">
+                        </div>
+                        <div>
+                            <label for="comment" class="block text-gray-700 font-medium">Your Comment</label>
+                            <textarea id="comment" name="comment" rows="4" class="w-full p-3 border border-gray-300 rounded-md" placeholder="Write your comment here"></textarea>
+                        </div>
+                        <button type="submit" class="px-6 py-3 bg-rose-500 text-white font-semibold rounded-md hover:bg-rose-600">Post Comment</button>
+                    </div>
+                </form>
+            </div>
+        </section>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-8">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+            <p>&copy; 2025 SharePlate. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        lucide.createIcons();
+        function addComment(event) {
+            event.preventDefault(); // Prevent form submission
+
+            const nameInput = document.getElementById('name');
+            const commentInput = document.getElementById('comment');
+
+            if (!nameInput.value || !commentInput.value) {
+                alert("Please enter both your name and comment.");
+                return;
+            }
+
+            // Create new comment div
+            const commentSection = document.querySelector('.space-y-6');
+            const newComment = document.createElement('div');
+            newComment.classList.add('bg-gray-50', 'p-4', 'rounded-lg', 'shadow-md');
+
+            // Comment header with user info
+            const commentHeader = document.createElement('div');
+            commentHeader.classList.add('flex', 'items-center', 'space-x-4');
+
+            const userImage = document.createElement('img');
+            userImage.classList.add('w-12', 'h-12', 'rounded-full');
+            userImage.src = 'https://randomuser.me/api/portraits/men/1.jpg'; // Placeholder image
+
+            const userName = document.createElement('p');
+            userName.classList.add('text-gray-800', 'font-semibold');
+            userName.innerText = nameInput.value;
+
+            const commentTime = document.createElement('p');
+            commentTime.classList.add('text-gray-600', 'text-sm');
+            commentTime.innerText = 'Just now'; // Static for now
+
+            commentHeader.append(userImage, userName, commentTime);
+
+            // Comment body
+            const commentBody = document.createElement('p');
+            commentBody.classList.add('mt-4', 'text-gray-700');
+            commentBody.innerText = commentInput.value;
+
+            // Append header and body to the new comment
+            newComment.append(commentHeader, commentBody);
+
+            // Add the new comment to the section
+            commentSection.appendChild(newComment);
+
+            // Clear input fields
+            nameInput.value = '';
+            commentInput.value = '';
+        }
+
+        // Attach event listener to form submission
+        document.getElementById('commentForm').addEventListener('submit', addComment);
+    </script>
+</body>
+
+</html>

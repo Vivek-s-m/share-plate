@@ -7,6 +7,23 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://unpkg.com/@lucide/web/dist/umd/lucide.js"></script>
+    <style>
+        .feature {
+            transition: opacity 0.8s ease, transform 0.8s ease;
+        }
+        .opacity-0 {
+            opacity: 0;
+        }
+        .opacity-100 {
+            opacity: 1;
+        }
+        .scale-95 {
+            transform: scale(0.95);
+        }
+        .scale-100 {
+            transform: scale(1);
+        }
+    </style>    
 </head>
 <body>
     <!-- Navbar -->
@@ -23,6 +40,7 @@
                     <a href="donate.html" class="text-gray-600 hover:text-rose-500">Donate Food</a>
                     <a href="volunteer.html" class="text-gray-600 hover:text-rose-500">Volunteer</a>
                     <a href="impact.html" class="text-gray-600 hover:text-rose-500">Impact</a>
+                    <a href="viewDonations.html" class="text-gray-600 hover:text-rose-500">View donations</a>
                     <a href="donate.html"> <button class="bg-rose-500 text-white px-4 py-2 rounded-md hover:bg-rose-600">
                         Get Started
                     </button></a>
@@ -66,7 +84,7 @@
                             Connect surplus food from events with those who need it most. Join our mission to reduce food waste and fight hunger in our communities.
                         </p>
                         <div class="mt-8 flex justify-center gap-4">
-                           <a href="donate.html"> <button class="bg-rose-500 text-white px-6 py-3 rounded-md hover:bg-rose-600 flex items-center">
+                            <a href="donate.html"> <button class="bg-rose-500 text-white px-6 py-3 rounded-md hover:bg-rose-600 flex items-center">
                                 Donate Food
                                 <i data-lucide="arrow-right" class="ml-2 h-5 w-5"></i>
                             </button></a>
@@ -110,9 +128,48 @@
                 </p>
             </div>
 
-            <div class="mt-20 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4" id="stats">
                 <!-- Stats will be dynamically inserted here -->
-            </div>
+                <div class="mt-12 grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
+                    <div class="bg-gray-50 p-6 rounded-lg text-center">
+                        <div class="flex justify-center">
+                            <i data-lucide="utensils" class="h-8 w-8 text-rose-500"></i>
+                        </div>
+                        <div class="mt-4">
+                            <div class="text-4xl font-bold text-gray-900" id="mealsCounter">0</div>
+                            <div class="mt-2 text-gray-600">Meals Shared</div>
+                        </div>
+                    </div>
+    
+                    <div class="bg-gray-50 p-6 rounded-lg text-center">
+                        <div class="flex justify-center">
+                            <i data-lucide="users" class="h-8 w-8 text-rose-500"></i>
+                        </div>
+                        <div class="mt-4">
+                            <div class="text-4xl font-bold text-gray-900" id="volunteersCounter">0</div>
+                            <div class="mt-2 text-gray-600">Active Volunteers</div>
+                        </div>
+                    </div>
+    
+                    <div class="bg-gray-50 p-6 rounded-lg text-center">
+                        <div class="flex justify-center">
+                            <i data-lucide="building" class="h-8 w-8 text-rose-500"></i>
+                        </div>
+                        <div class="mt-4">
+                            <div class="text-4xl font-bold text-gray-900" id="partnersCounter">0</div>
+                            <div class="mt-2 text-gray-600">Partner Organizations</div>
+                        </div>
+                    </div>
+    
+                    <div class="bg-gray-50 p-6 rounded-lg text-center">
+                        <div class="flex justify-center">
+                            <i data-lucide="clock" class="h-8 w-8 text-rose-500"></i>
+                        </div>
+                        <div class="mt-4">
+                            <div class="text-4xl font-bold text-gray-900" id="hoursCounter">0</div>
+                            <div class="mt-2 text-gray-600">Volunteer Hours</div>
+                        </div>
+                    </div>
+                </div>
 
             <div class="mt-20 bg-rose-500 rounded-lg p-8 text-center">
                 <h3 class="text-2xl font-bold text-white">
@@ -121,7 +178,7 @@
                 <p class="mt-4 text-white text-lg">
                     Join our mission to reduce food waste and fight hunger
                 </p>
-                <button class="mt-6 bg-white text-rose-500 px-8 py-3 rounded-md hover:bg-gray-100 font-semibold">
+                <button onclick="location.href = 'donate.html'" class="mt-6 bg-white text-rose-500 px-8 py-3 rounded-md hover:bg-gray-100 font-semibold">
                     Get Started Today
                 </button>
             </div>
@@ -149,6 +206,7 @@
                         <li><a href="#" class="text-gray-400 hover:text-white">About Us</a></li>
                         <li><a href="donate.html" class="text-gray-400 hover:text-white">Donate Food</a></li>
                         <li><a href="volunteer.html" class="text-gray-400 hover:text-white">Volunteer</a></li>
+                        <li><a href="viewDonations.html" class="text-gray-400 hover:text-white">View donations</a></li>
                     </ul>
                 </div>
 
@@ -161,11 +219,11 @@
                         </li>
                         <li class="flex items-center text-gray-400">
                             <i data-lucide="phone" class="h-5 w-5 mr-2"></i>
-                            +1 (555) 123-4567
+                            +91 1111111111
                         </li>
                         <li class="flex items-center text-gray-400">
                             <i data-lucide="map-pin" class="h-5 w-5 mr-2"></i>
-                            123 Sharing Street, NY
+                            123 XYZ street Bengaluru
                         </li>
                     </ul>
                 </div>
@@ -195,5 +253,81 @@
     </footer>
 
     <script src="js/main.js"></script>
+    <script>
+        // Initialize Lucide icons
+        lucide.createIcons();
+
+        // Counter animation
+        function animateCounter(element, target, duration = 2000) {
+            let start = 0;
+            const increment = target / (duration / 16);
+
+            function updateCounter() {
+                start += increment;
+                const current = Math.min(Math.round(start), target);
+                element.textContent = current.toLocaleString();
+
+                if (current < target) {
+                    requestAnimationFrame(updateCounter);
+                }
+            }
+
+            updateCounter();
+        }
+
+        // Start counter animations
+        animateCounter(document.getElementById('mealsCounter'), 50000);
+        animateCounter(document.getElementById('volunteersCounter'), 1000);
+        animateCounter(document.getElementById('partnersCounter'), 200);
+        animateCounter(document.getElementById('hoursCounter'), 5000);
+
+        // Dummy features for demonstration
+        const features = [
+            { icon: 'box', title: 'Easy Donations', description: 'Donate food in a few simple steps.' },
+            { icon: 'truck', title: 'Efficient Pickup', description: 'We ensure quick and reliable pickups.' },
+            { icon: 'heart', title: 'Community Impact', description: 'Your donations make a real difference.' },
+        ];
+    
+        // Dynamically insert features
+        const featuresContainer = document.getElementById('features');
+        features.forEach((feature, index) => {
+            const featureElement = document.createElement('div');
+            featureElement.className = 'bg-white p-6 rounded-lg shadow-lg opacity-0 transform scale-95 feature';
+            featureElement.innerHTML = `
+                <div class="flex justify-center">
+                    <i data-lucide="${feature.icon}" class="h-8 w-8 text-rose-500"></i>
+                </div>
+                <div class="mt-4 text-center">
+                    <h3 class="text-xl font-bold text-gray-900">${feature.title}</h3>
+                    <p class="mt-2 text-gray-600">${feature.description}</p>
+                </div>
+            `;
+            featuresContainer.appendChild(featureElement);
+        });
+    
+        // Initialize Lucide icons
+        lucide.createIcons();
+    
+        // Animate features on scroll using Intersection Observer
+        const observerOptions = {
+            root: null, // Use viewport as the root
+            threshold: 0.1, // Trigger animation when 10% of the element is visible
+        };
+    
+        const featureObserver = new IntersectionObserver((entries) => {
+            entries.forEach((entry) => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('opacity-100', 'scale-100');
+                    entry.target.classList.remove('opacity-0', 'scale-95');
+                    featureObserver.unobserve(entry.target); // Stop observing once animated
+                }
+            });
+        }, observerOptions);
+    
+        // Observe each feature
+        document.querySelectorAll('.feature').forEach((feature) => {
+            featureObserver.observe(feature);
+        });
+    </script>    
 </body>
 </html>

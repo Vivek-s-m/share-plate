@@ -1,0 +1,180 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View Donations - SharePlate</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        main {
+            flex: 1;
+        }
+    </style>
+</head>
+<body class="bg-gray-50">
+
+    <!-- Navbar -->
+    <nav class="bg-white shadow-lg fixed w-full z-50">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+            <div class="flex justify-between h-16">
+                <div class="flex items-center">
+                    <i data-lucide="heart" class="h-8 w-8 text-rose-500"></i>
+                    <span class="ml-2 text-xl font-bold text-gray-800">SharePlate</span>
+                </div>
+                <div class="hidden md:flex items-center space-x-8">
+                    <a href="index.html" class="text-gray-600 hover:text-rose-500">Home</a>
+                    <a href="donate.html" class="text-gray-600 hover:text-rose-500">Donate Food</a>
+                    <a href="volunteer.html" class="text-gray-600 hover:text-rose-500">Volunteer</a>
+                    <a href="view-donations.html" class="text-rose-600 hover:text-rose-500">View Donations</a>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Page Content -->
+    <main class="container mx-auto mt-20 px-6">
+        <h1 class="text-3xl font-bold text-gray-800 mb-8">Donations Submitted</h1>
+
+        <!-- Donations Table -->
+        <div class="overflow-x-auto">
+            <table class="min-w-full bg-white shadow-md rounded-lg border border-gray-200">
+                <thead class="bg-rose-500 text-white">
+                    <tr>
+                        <th class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">Donor Name</th>
+                        <th class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">Contact</th>
+                        <th class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">Food Type</th>
+                        <th class="px-6 py-3 text-left text-sm font-medium uppercase tracking-wider">Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="donationsTableBody" class="divide-y divide-gray-200">
+                    <!-- Rows will be dynamically populated -->
+                </tbody>
+            </table>
+        </div>
+    </main>
+
+    <!-- Donation Details Modal -->
+    <div id="detailsModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
+        <div class="bg-white w-96 rounded-lg shadow-lg p-6">
+            <div class="flex justify-between items-center mb-4">
+                <h2 class="text-lg font-bold text-gray-800">Donation Details</h2>
+                <button id="closeModal" class="text-gray-600 hover:text-gray-800">&times;</button>
+            </div>
+            <div id="modalContent" class="text-gray-700">
+                <!-- Donation details will be dynamically populated -->
+            </div>
+            <!-- Request Donation Button -->
+            <button id="requestDonationBtn" class="w-full mt-4 px-6 py-3 bg-rose-500 text-white font-semibold rounded-md hover:bg-rose-600">Request Donation</button>
+        </div>
+    </div>
+
+    <!-- Confirmation Modal -->
+    <div id="confirmationModal" class="fixed inset-0 bg-black bg-opacity-50 hidden flex items-center justify-center z-50">
+        <div class="bg-white w-96 rounded-lg shadow-lg p-6">
+            <div class="text-gray-700 text-center">
+                <h3 class="text-lg font-semibold">Request Submitted</h3>
+                <p class="mt-4 text-gray-600">Our team will shortly contact you. Thank you for your interest in receiving donations!</p>
+                <button id="closeConfirmationModal" class="mt-4 px-6 py-3 bg-rose-500 text-white font-semibold rounded-md hover:bg-rose-600">Close</button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="bg-gray-900 text-white">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+            <p class="text-center text-gray-400">© 2024 SharePlate. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script>
+        async function fetchDonations() {
+            try {
+                const response = await fetch('/donations'); // Adjust the endpoint based on your backend
+                const donations = await response.json();
+
+                const tableBody = document.getElementById('donationsTableBody');
+                if (donations.donations.length === 0) {
+                    tableBody.innerHTML = ` 
+                        <tr>
+                            <td colspan="4" class="px-6 py-4 text-center text-gray-500">
+                                No donations available at the moment.
+                            </td>
+                        </tr>
+                    `;
+                    return;
+                }
+
+                donations.donations.forEach(donation => {
+                    const row = `
+                        <tr class="hover:bg-gray-100">
+                            <td class="px-6 py-4 text-sm text-gray-800">${donation.donorName}</td>
+                            <td class="px-6 py-4 text-sm text-gray-800">${donation.phone}</td>
+                            <td class="px-6 py-4 text-sm text-gray-800">${donation.foodType.join(', ')}</td>
+                            <td class="px-6 py-4 text-sm text-rose-500 hover:text-rose-600">
+                                <button class="viewDetailsBtn" data-donation='${JSON.stringify(donation)}'>View Details</button>
+                            </td>
+                        </tr>
+                    `;
+                    tableBody.innerHTML += row;
+                });
+
+                // Add event listeners to "View Details" buttons
+                document.querySelectorAll('.viewDetailsBtn').forEach(button => {
+                    button.addEventListener('click', (e) => {
+                        const donation = JSON.parse(e.target.dataset.donation);
+                        showModal(donation);
+                    });
+                });
+            } catch (error) {
+                console.error('Error fetching donations:', error);
+            }
+        }
+
+        function showModal(donation) {
+            const modal = document.getElementById('detailsModal');
+            const modalContent = document.getElementById('modalContent');
+
+            modalContent.innerHTML = `
+                <p><strong>Event Name:</strong> ${donation.eventName}</p>
+                <p><strong>Event Type:</strong> ${donation.eventType}</p>
+                <p><strong>Event Date:</strong> ${new Date(donation.eventDate).toLocaleDateString()}</p>
+                <p><strong>Event Time:</strong> ${donation.eventTime}</p>
+                <p><strong>Food Description:</strong> ${donation.foodDescription}</p>
+                <p><strong>Servings:</strong> ${donation.servings}</p>
+                <p><strong>Pickup Address:</strong> ${donation.pickupAddress}</p>
+            `;
+
+            modal.classList.remove('hidden');
+        }
+
+        function closeModal() {
+            const modal = document.getElementById('detailsModal');
+            modal.classList.add('hidden');
+        }
+
+        function closeConfirmationModal() {
+            const confirmationModal = document.getElementById('confirmationModal');
+            confirmationModal.classList.add('hidden');
+        }
+
+        function showConfirmationModal() {
+            const confirmationModal = document.getElementById('confirmationModal');
+            closeModal();
+            confirmationModal.classList.remove('hidden');
+        }
+
+        document.getElementById('closeModal').addEventListener('click', closeModal);
+        document.getElementById('closeConfirmationModal').addEventListener('click', closeConfirmationModal);
+        document.getElementById('requestDonationBtn').addEventListener('click', showConfirmationModal);
+
+        document.addEventListener('DOMContentLoaded', fetchDonations);
+    </script>
+</body>
+</html>
